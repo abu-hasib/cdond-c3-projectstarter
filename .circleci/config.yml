@@ -7,10 +7,10 @@ jobs:
     steps:
       - run:
           name: Build front-end
-          command: |
+          command: bash -c "
             cd ../frontend
             npm install
-            npm run build
+            npm run build"
   build-backend:
     docker:
       - image: circleci/node:13.8.0
