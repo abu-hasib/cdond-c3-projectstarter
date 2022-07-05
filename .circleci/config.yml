@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build back-end
           command: |
-            cd ../backend
+            cd ~/project/backend
             npm install
             npm run build
 
