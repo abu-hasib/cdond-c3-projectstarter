@@ -3,11 +3,11 @@ version: 2.1
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       - run: pwd
       - run: ls ~
-      - run: cd ~/project/frontend
+      - run: cd frontend
       - run: npm install
       - run:
           npm run build
