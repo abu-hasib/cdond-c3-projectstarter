@@ -46,7 +46,7 @@ jobs:
           keys:
             - v1-npm-deps-
       - run:
-          name: Test front-end code
+          name: Test back-end code
           command: |
             cd ~/project/backend
             npm install
