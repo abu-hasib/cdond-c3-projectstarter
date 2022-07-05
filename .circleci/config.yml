@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - checkout
       - run: pwd
       - run: ls ~
       - run: cd frontend
@@ -31,4 +32,4 @@ workflows:
   default:
     jobs:
       - build-frontend
-      - build-backend
+      # - build-backend
