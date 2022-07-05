@@ -3,8 +3,9 @@ version: 2.1
 jobs:
   build-frontend:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
+      - checkout
       - run: pwd
       - run: ls ~
       - run: cd frontend
