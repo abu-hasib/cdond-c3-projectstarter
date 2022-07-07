@@ -83,7 +83,7 @@ jobs:
             npm audit --audit-level=critical
   deploy-infrastructure:
     docker:
-      - image: cimg/aws:2022.6.1
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run: aws --version
