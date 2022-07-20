@@ -102,7 +102,7 @@ jobs:
       - checkout
       - run: aws --version
       - run:
-          name: Ensure back-end infrastructure exists
+          name: Ensure back-end infrastructure exists.
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
