@@ -129,6 +129,38 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["93:c4:a5:ea:76:0f:68:74:86:b7:83:54:d2:16:33:65"]
+      - attach_workspace:
+        at: .
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            exit 1
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt main.yml
+            exit 1
+      # Here's where you will add some code to rollback on failure
+      - environment:
+          - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
+          - TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
+          - TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
+          - TYPEORM_PORT: 5432
+          - TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}"
+          - TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}"
+          - TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
+          - TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
+          - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
+
 workflows:
   default:
     jobs:
@@ -144,3 +176,5 @@ workflows:
           requires: [build-backend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
