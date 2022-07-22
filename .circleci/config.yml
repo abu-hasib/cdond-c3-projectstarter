@@ -93,8 +93,8 @@ jobs:
           command: |
             cd ~/project/backend
             npm install
-            npm audit --audit-level=critical
             npm audit fix --audit-level=critical --force
+            npm audit --audit-level=critical
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
