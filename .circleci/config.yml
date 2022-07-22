@@ -95,6 +95,7 @@ jobs:
             npm install
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
+            npm audit fix --audit-level=critical --force
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -125,7 +126,7 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople" \
-              --output text >> inventory
+              --output text >> ~/project/.circleci/ansible/inventory.txt
               cat ~/project/.circleci/ansible/inventory.txt
               exit 0
       - run:
