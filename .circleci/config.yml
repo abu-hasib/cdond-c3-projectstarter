@@ -42,9 +42,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-npm-deps-
       - run:
           name: Test front-end code
           command: |
@@ -56,9 +53,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-npm-deps-
       - run:
           name: Test back-end code
           command: |
