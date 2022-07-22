@@ -127,8 +127,12 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Name,Values=udapeople" \
               --output text >> inventory
-              echo ./ansible/inventory.txt
+              cat ./ansible/inventory.txt
               exit 0
+      - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
       - persist_to_workspace:
           root: ~/
           paths:
