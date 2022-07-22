@@ -109,8 +109,7 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              exit 0
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -118,8 +117,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              exit 0
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -128,7 +126,6 @@ jobs:
               --filters "Name=tag:project,Values=udapeople" \
               --output text >> ~/project/.circleci/ansible/inventory.txt
               cat ~/project/.circleci/ansible/inventory.txt
-              exit 0
       - run:
           name: Install tar utility
           command: |
@@ -161,13 +158,11 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-            exit 0
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-            exit 0
       # Here's where you will add some code to rollback on failure
 
 workflows:
