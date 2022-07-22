@@ -125,9 +125,10 @@ jobs:
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Project,Values=udacity" \
+              --filters "Name=tag:Name,Values=udapeople" \
               --output text >> inventory
-            exit 0
+              echo ./ansible/inventory.txt
+              exit 0
       - persist_to_workspace:
           root: ~/
           paths:
