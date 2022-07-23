@@ -153,6 +153,14 @@ jobs:
           command: |
             apk add --update ansible
       - run:
+          name: Add back-end ip to ansible inventory
+          command: |
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople" \
+              --output text >> ~/project/.circleci/ansible/inventory.txt
+              cat ~/project/.circleci/ansible/inventory.txt
+      - run:
           name: Configure server
           command: |
             cat ~/project/.circleci/ansible/inventory.txt
