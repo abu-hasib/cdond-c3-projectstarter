@@ -132,7 +132,6 @@ jobs:
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
-      - image: amazon/aws-cli
         environment:
           TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
           TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
@@ -148,19 +147,11 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["23:8a:ea:08:eb:83:82:4d:70:ff:f9:bb:0a:b2:fe:b6"]
       - attach_workspace:
-          at: .
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             apk add --update ansible
-      - run:
-          name: Add back-end ip to ansible inventory
-          command: |
-            aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=udapeople" \
-              --output text >> ~/project/.circleci/ansible/inventory.txt
-              cat ~/project/.circleci/ansible/inventory.txt
       - run:
           name: Configure server
           command: |
