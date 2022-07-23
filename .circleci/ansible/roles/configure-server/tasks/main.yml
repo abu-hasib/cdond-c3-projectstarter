@@ -1,18 +1,17 @@
 ---
-- name: "install python"
+- name: "install python."
   become: yes
-  npm:
+  apt:
     name: python3
-    global: yes
-    production: yes
-    state: present
+    state: latest
+    update_cache: yes
 
 - name: "update apt packages."
   become: yes
   apt:
     update_cache: yes
 
-- name: "upgrade packages"
+- name: "upgrade packages."
   become: yes
   apt:
     upgrade: yes
