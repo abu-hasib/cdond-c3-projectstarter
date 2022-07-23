@@ -197,3 +197,5 @@ workflows:
           requires: [test-frontend, test-backend, scan-frontend]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
