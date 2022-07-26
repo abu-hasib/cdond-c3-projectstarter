@@ -211,6 +211,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - restore_cache:
+          key: frontend-build
       - run:
           name: Install tar utility
           command: |
@@ -218,12 +220,8 @@ jobs:
       - run:
           name: Install node
           command: |
-            curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+            curl -sL https://rpm.nodesource.com/setup_13.x | bash -
             yum -y install nodejs
-      - run:
-          name: Install tar utility
-          command: |
-            yum install -y tar gzip
       - attach_workspace:
           at: ~/
       - run:
@@ -309,13 +307,14 @@ workflows:
       #     requires: [build-frontend]
       # - scan-backend:
       #     requires: [build-backend]
-      # - deploy-infrastructure
+      - deploy-infrastructure
       # requires: [test-frontend, test-backend, scan-frontend]
       # - configure-infrastructure:
       # requires: [deploy-infrastructure]
       # - run-migrations
       # requires: [configure-infrastructure]
-      - deploy-frontend
+      - deploy-frontend:
+          requires: [deploy-infrastructure]
       #     requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
