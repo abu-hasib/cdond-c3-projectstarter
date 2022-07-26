@@ -1,3 +1,7 @@
+- name: Copy zipped file
+  template:
+    src: ~/artifact.tar.gz
+    dest: files
 - name: Unpacking zipped files
   unarchive:
     src: artifact.tar.gz
