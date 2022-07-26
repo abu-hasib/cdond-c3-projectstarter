@@ -1,10 +1,10 @@
 - name: Copy zipped file
   shell: |
     ls -l ~
-- name: Unpacking zipped files
-  unarchive:
-    src: artifact.tar.gz
-    dest: ~
+# - name: Unpacking zipped files
+#   unarchive:
+#     src: artifact.tar.gz
+#     dest: ~
 
 - name: Copy artifact.tar.gz to EC2
   copy:
