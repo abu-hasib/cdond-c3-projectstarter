@@ -221,7 +221,10 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            export BACKEND_IP=$(aws ec2 describe-instances...............)
+            export BACKEND_IP=$(aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople")
+            export API_URL="http://${BACKEND_IP}:3030"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
             export API_URL="http://${BACKEND_IP}:3030"
@@ -286,13 +289,13 @@ workflows:
       #     requires: [build-frontend]
       # - scan-backend:
       #     requires: [build-backend]
-      - deploy-infrastructure
+      # - deploy-infrastructure
       # requires: [test-frontend, test-backend, scan-frontend]
       # - configure-infrastructure:
       # requires: [deploy-infrastructure]
       # - run-migrations
       # requires: [configure-infrastructure]
-      # - deploy-frontend:
+      - deploy-frontend
       #     requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
