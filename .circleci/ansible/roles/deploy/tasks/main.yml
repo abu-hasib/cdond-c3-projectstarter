@@ -4,7 +4,13 @@
 - name: Unpacking zipped files
   unarchive:
     src: artifact.tar.gz
-    dest: .
+    dest: ~
+
+- name: Copy artifact.tar.gz to EC2
+  copy:
+    src: "artifact.tar.gz"
+    dest: "/home/ubuntu/artifact.tar.gz"
+
 - name: Executing node
   shell: |
     tar -xf artifact.tar.gz
