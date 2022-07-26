@@ -39,7 +39,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: [backend-build]
+          key: backend-build
       - run:
           name: Build back-end
           command: |
@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: [backend-build]
+          key: backend-build
       - run:
           name: Test back-end code
           command: |
@@ -96,7 +96,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: [backend-build]
+          key: backend-build
       - run:
           name: Scan back-end code
           command: |
@@ -186,7 +186,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: [backend-build]
+          key: backend-build
       - run:
           name: Run migrations
           command: |
