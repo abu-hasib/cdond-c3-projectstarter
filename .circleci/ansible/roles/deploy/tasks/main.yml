@@ -1,6 +1,6 @@
 - name: Unpacking zipped files
   unarchive:
-    src: ./artifact.tar.gz
+    src: artifact.tar.gz
     dest: .
 - name: Executing node
   shell: |
