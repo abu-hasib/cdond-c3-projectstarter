@@ -1,6 +1,6 @@
 - name: Copy zipped file
   shell: |
-    ls -l ~
+    ls -l "~"
 # - name: Unpacking zipped files
 #   unarchive:
 #     src: artifact.tar.gz
