@@ -1,10 +1,18 @@
 - name: Copy zipped file
   shell: |
-    ls -l "/home/ubuntu"
+    ls /home/ubuntu
 # - name: Unpacking zipped files
 #   unarchive:
 #     src: artifact.tar.gz
 #     dest: ~
+- command:
+  chdir: /data/example
+  cmd: ls
+  register: result
+  tags: t1
+- debug:
+    var: result.stdout
+  tags: always
 
 - name: Copy artifact.tar.gz to EC2
   copy:
