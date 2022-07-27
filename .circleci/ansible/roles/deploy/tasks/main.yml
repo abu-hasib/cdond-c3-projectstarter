@@ -1,10 +1,10 @@
 - name: Copy zipped file
   shell: |
     ls /home/ubuntu
-# - name: Unpacking zipped files
-#   unarchive:
-#     src: artifact.tar.gz
-#     dest: ~
+- name: Unpacking zipped files
+  unarchive:
+    src: artifact.tar.gz
+    dest: ~
 
 - name: Copy artifact.tar.gz to EC2
   copy:
@@ -13,7 +13,8 @@
 
 - name: Executing node
   shell: |
-    tar -xf artifact.tar.gz
+    ls /home/ubuntu
+    # tar -xf artifact.tar.gz
     npm install
     pm2 stop default
     pm2 start npm -- start
