@@ -293,6 +293,7 @@ jobs:
     docker:
       # Lightweight Docker image
       - image: amazon/aws-cli
+
     steps:
       # Checkout code from git
       - checkout
@@ -316,17 +317,15 @@ jobs:
               --filters "Name=tag:project,Values=udapeople" \
               --output text)
             echo "${BACKEND_IP}"
+            ls frontend
             export API_URL="http://${BACKEND_IP}:3030"
+            echo "${API_URL}"
+            echo 'export API_URL="http://${BACKEND_IP}:3030"' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Backend smoke test.
           command: |
             # your code here
-            export BACKEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=udapeople" \
-              --output text)
-            echo "${BACKEND_IP}"
-            export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
