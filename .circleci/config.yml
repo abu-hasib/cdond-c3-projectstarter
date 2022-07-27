@@ -300,7 +300,9 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update nodejs npm curl
-            apk add aws-cli --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
       - run:
           name: Get backend url
           command: |
