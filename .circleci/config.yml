@@ -300,7 +300,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update nodejs npm curl
-            apk add aws-cli
+            apk add aws-cli --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
       - run:
           name: Get backend url
           command: |
