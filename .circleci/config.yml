@@ -299,6 +299,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk add --no-cache aws-cli
             apk add --update nodejs npm curl
       - run:
           name: Get backend url
