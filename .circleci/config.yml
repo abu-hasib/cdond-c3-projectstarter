@@ -310,14 +310,14 @@ jobs:
           command: |
             apk add --no-cache tar curl
             apk add --update nodejs npm
-            RUN apk add --no-cache \
+            apk add --no-cache \
             python3 \
             py3-pip \
             && pip3 install --upgrade pip \
             && pip3 install \
             awscli \
             && rm -rf /var/cache/apk/*
-            RUN aws --version  
+            aws --version  
             # yum install -y tar gzip
             # curl -sL https://rpm.nodesource.com/setup_14.x | bash -
             # yum -y install nodejs
