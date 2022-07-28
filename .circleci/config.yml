@@ -11,7 +11,7 @@ commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
-      # Add parameter here
+    # Add parameter here
     steps:
       - run:
           name: Destroy environments
@@ -341,7 +341,7 @@ jobs:
             fi
       - print_pipeline_id:
           id: << pipeline.id >>
-      - destroy_environment
+      - destroy-environment
       - run:
           name: Frontend smoke test.
           command: |
