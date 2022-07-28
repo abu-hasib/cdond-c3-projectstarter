@@ -22,8 +22,8 @@ commands:
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
-    parameters:
-      # Add parameter here
+    # parameters:
+    # Add parameter here
     steps:
       - run:
           name: Revert migrations
@@ -353,7 +353,6 @@ jobs:
             if curl "${API_URL}/api/status" | grep "ok"; then exit 0; else exit 1; fi
       - print_pipeline_id:
           id: << pipeline.id >>
-      - destroy-environment
       - run:
           name: Frontend smoke test.
           command: |
