@@ -299,7 +299,7 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image
-      - image: amazon/aws-cli
+      - image: alpine:latest
 
     steps:
       # Checkout code from git
@@ -308,12 +308,14 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y tar gzip
+            apk add --update nodejs npm
+            apk add --no-cache tar
+            # yum install -y tar gzip
             curl -sL https://rpm.nodesource.com/setup_14.x | bash -
             yum -y install nodejs
-            # curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            # unzip awscli-bundle.zip
-            # ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
       - attach_workspace:
           at: ~/
       - run:
@@ -333,11 +335,11 @@ jobs:
           command: |
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
-            > then
-            >   return 0
-            > else
-            >   return 1
-            > fi
+            then
+              return 0
+            else
+              return 1
+            fi
       - print_pipeline_id:
           id: << pipeline.id >>
       - destroy-environment
