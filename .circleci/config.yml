@@ -332,7 +332,7 @@ jobs:
           name: Backend smoke test.
           command: |
             echo "${API_URL}"
-            if curl "${API_URL}/api/status" | grep "ok"; then return 0; else return 1; fi
+            if curl "${API_URL}/api/status" | grep "ok"; then exit 0; else exit 1; fi
       - print_pipeline_id:
           id: << pipeline.id >>
       - destroy-environment
