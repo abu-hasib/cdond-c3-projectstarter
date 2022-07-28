@@ -10,8 +10,6 @@ commands:
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-    # Add parameter here
     steps:
       - run:
           name: Destroy environments
@@ -19,8 +17,28 @@ commands:
           command: |
             aws cloudformation delete-stack \
               --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack \
+              --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
-            exit 1
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      # Add parameter here
+    steps:
+      - run:
+          name: Revert migrations
+          # Add when this will run
+          when: on_fail
+          command: |
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            SUCCESS=$(curl --insecure  https://kvdb.io/79bwzwaUyMYrgaujBvzhYn/migration_<< parameters.workflow_id >>)
+            if(( $SUCCESS==1 )); 
+            then
+             cd ~/project/backend
+             npm install
+             npm run migration:revert
+              exit 0
+            fi
 jobs:
   build-frontend:
     docker:
@@ -342,14 +360,9 @@ jobs:
             # your code here
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
             echo ${URL} 
-            if curl -s ${URL} | grep "Welcome"
-            then
-                # Change this to 0 after the job fails
-              exit 0
-            else
-              exit 1
-            fi
+            if curl -s ${URL} | grep "Welcome"; then exit 0; else exit 1; fi
       - destroy-environment
+      - revert-migrations
       # Here's where you will add some code to rollback on failure
 workflows:
   default:
