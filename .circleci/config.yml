@@ -310,9 +310,13 @@ jobs:
           command: |
             apk add --no-cache tar curl
             apk add --update nodejs npm
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
+            apk add --no-cache \
+            python3 \
+            py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install \
+            awscli \
+            && rm -rf /var/cache/apk/*
             aws --version
       - attach_workspace:
           at: ~/
