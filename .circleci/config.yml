@@ -310,22 +310,10 @@ jobs:
           command: |
             apk add --no-cache tar curl
             apk add --update nodejs npm
-            apk add --no-cache \
-            python3 \
-            py3-pip \
-            && pip3 install --upgrade pip \
-            && pip3 install \
-            awscli \
-            && rm -rf /var/cache/apk/*
-            aws --version  
-            # yum install -y tar gzip
-            # curl -sL https://rpm.nodesource.com/setup_14.x | bash -
-            # yum -y install nodejs
-            # curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            # unzip awscli-bundle.zip
-            # ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-            # echo "export PATH="/usr/local/bin/aws:$PATH" >> $BASH_ENV
-            # source $BASH_ENV
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+            aws --version
       - attach_workspace:
           at: ~/
       - run:
