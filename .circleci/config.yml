@@ -128,8 +128,8 @@ jobs:
           command: |
             cd ~/project/backend
             npm install
-            # npm audit --audit-level=critical
             npm audit fix
+            # npm audit
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -169,7 +169,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
-      - run: return 1
+      - run: return
       - destroy-environment
   configure-infrastructure:
     docker:
