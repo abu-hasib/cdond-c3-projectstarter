@@ -339,7 +339,8 @@ jobs:
             else
                 return 1
             fi
-      - print_pipeline_id
+      - print_pipeline_id:
+          id: << pipeline.id >>
       - destroy_environment
       - run:
           name: Frontend smoke test.
