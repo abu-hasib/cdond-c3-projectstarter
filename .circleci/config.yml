@@ -385,7 +385,7 @@ jobs:
             # Change the initial stack name, as applicable to you
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
-            --stack-name Initialstack \
+            --stack-name InitialStack \
             --parameter-overrides WorkflowID="kk1j287dhjppmz548" \
             --tags project=udapeople
       # Here's where you will add some code to rollback on failure
