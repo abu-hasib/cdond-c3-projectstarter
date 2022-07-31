@@ -57,7 +57,6 @@ jobs:
             cd ~/project/frontend
             npm install
             npm run build
-      # save any changes to the cache
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -74,7 +73,6 @@ jobs:
             cd ~/project/backend
             npm install
             npm run build
-      # save any changes to the cache
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -170,7 +168,6 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
   configure-infrastructure:
     docker:
@@ -197,7 +194,6 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
   run-migrations:
     docker:
@@ -221,7 +217,7 @@ jobs:
           command: |
             cd ~/project/backend
             npm install
-            npm run migration:revert
+            npm run migrations:revert
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
@@ -232,14 +228,12 @@ jobs:
                curl https://kvdb.io/79bwzwaUyMYrgaujBvzhYn/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
              fi
             exit 0
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
+
   deploy-frontend:
     docker:
-      # Docker image here that supports AWS CLI
       - image: amazon/aws-cli
     steps:
-      # Checkout code from git
       - checkout
       - run:
           name: Install tar utility
@@ -275,7 +269,6 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             ls -l ./dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
   deploy-backend:
     docker:
@@ -317,17 +310,12 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
   smoke-test:
     docker:
-      # Lightweight Docker image
       - image: amazon/aws-cli
-
     steps:
-      # Checkout code from git
       - checkout
-
       - run:
           name: Install dependencies
           command: |
@@ -369,7 +357,7 @@ jobs:
       - destroy-environment
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      # Here's where you will add some code to rollback on failure
+
   cloudfront-update:
     docker:
       - image: amazon/aws-cli
