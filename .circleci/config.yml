@@ -340,7 +340,7 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*]..PublicDnsName' \
+              --query 'Reservations[*].Instances[*].PublicDnsName' \
               --filters "Name=tag:project,Values=udapeople" \
               --output text)
             echo "${BACKEND_IP}"
