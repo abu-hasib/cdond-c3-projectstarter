@@ -259,9 +259,9 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --query 'Reservations[*].Instances[*].PublicDnsName' \
               --filters "Name=tag:project,Values=udapeople" \
-              --output text)
+              --output text | sed '/^[[:space:]]*$/d')
             export API_URL="http://${BACKEND_IP}:3030"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
@@ -352,7 +352,7 @@ jobs:
           name: Backend smoke test.
           command: |
             echo "${API_URL}"
-            # if curl "${API_URL}/api/status" | grep "ok"; then exit 0; else exit 1; fi
+            if curl "${API_URL}/api/status" | grep "ok"; then exit 0; else exit 1; fi
       - print_pipeline_id:
           id: << pipeline.id >>
       - run:
