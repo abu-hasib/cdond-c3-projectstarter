@@ -203,7 +203,7 @@ jobs:
       - run:
           name: Configure node exporter
           command: |
-            useradd --no-create-home node_exporter
+            adduser -S --no-create-home node_exporter
             wget https://github.com/prometheus/node_exporter/releases/download/v1.4.0-rc.0/node_exporter-1.4.0-rc.0.linux-amd64.tar.gz
             tar xzf node_exporter-1.4.0-rc.0.linux-amd64
             cp node_exporter-1.4.0-rc.0.linux-amd64/node_exporter /usr/local/bin/node_exporter
