@@ -426,12 +426,12 @@ workflows:
           filters:
             branches:
               only:
-                - ^(?!master).*$
+                - /^(?!master).*$/
       - build-backend:
           filters:
             branches:
               only:
-                - ^(?!master).*$
+                - /^(?!master).*$/
       - test-frontend:
           requires: [build-frontend]
       - test-backend:
